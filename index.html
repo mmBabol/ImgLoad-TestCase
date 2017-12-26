@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+        <title>Github - Image load test cases</title>
+        <meta name='description' content='Test cases'>
+    <meta name='author' content='Mat Babol'>
+</head>
+<body>
+<!-- 
+        With some browsers, I notice that <img> elements in my page don't seem to always fire their onload event.  
+        Specifically, when I set the .src of an image to the same URL as it's already using, no load event fires.  
+        My code looks something like this:
+
+          var img = document.querySelector('#image-1234');
+          img.onload = function loaded() {
+             ...
+          };
+
+          img.src = "http://some.url.com/image";
+
+          ...
+          // Somewhere late in the code I set the URL to the same thing again
+          img.src = "http://some.url.com/image";
+
+          // I'd expect the onload event to fire a second time, but it doesn't always in this case!
+
+        Later on, I sometimes need to reset the image, and in some cases, it needs to use the same URL again.  
+        I expect to get an onload event firing every time I change the img.src, no matter what the URL is.
+
+        You are asked to write a simple Test Case to test whether a browser has this bug or not. Your test should 
+        be a very basic HTML page with some JavaScript that tries to do what your friend is describing:
+
+            load an img with a given src (use any image URL you want)
+            make sure the onload event fires
+            after the first onload is completed, update the img.src to the same URL you used in step 1.
+            make sure a second onload event fires. If the second event fires, your test passes. If not, it fails.
+
+        You can use CSS to indicate if your test passed or failed (e.g., set the background-color of the document.body 
+        to red after the first onload and then to green after the second, or do any other visual thing you want to 
+        indicate pass/fail).
+
+        NOTE: your test case should be simple. Don't use extra JavaScript or CSS libraries. You don't need to use any
+        special testing infrastructure. Just a basic HTML page with some JavaScript -->
+
+    <h1>Test Case for image load</h1>
+
+    <img id="myImg" alt="Can't find image"/>
+
+    <br/>
+
+    <p>The page loaded the image <span id="result">0</span> times</p>
+
+    <button id="btnLoadImg">Test me</button>
+
+
+
+    <script>
+        var count = 0;
+        var img = document.querySelector("#myImg");
+        var btn = document.querySelector("#btnLoadImg");
+        var txt = document.querySelector("#result");
+
+        document.body.style.backgroundColor = "red";
+        img.src="turtle.png";
+
+        img.onload = function loaded(){
+            ++count;
+            if(count<=1){
+                document.body.style.backgroundColor = "#52accb";
+            }
+            else{
+                document.body.style.backgroundColor = "#2d48de";
+            }
+            txt.innerHTML = count;
+        }
+
+        btn.onclick = function loadImg(){
+            img.src="turtle.png";
+        }
+
+    </script>
+
+</body>
+</html>
